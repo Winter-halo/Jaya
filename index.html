@@ -115,10 +115,131 @@
             font-style: italic;
         }
 
+        .music-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
+            border: 2px solid rgba(255, 182, 193, 0.2);
+        }
+
         .music-note {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #ff69b4;
             margin-bottom: 20px;
+            text-align: center;
+            animation: musicFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes musicFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .music-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .play-music-btn {
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            animation: musicPulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-music-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .play-music-btn:hover::before {
+            left: 100%;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .play-music-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .music-status {
+            font-size: 1rem;
+            color: #8b4b8c;
+            font-style: italic;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .music-status.show {
+            opacity: 1;
+        }
+
+        .music-visualizer {
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 3px;
+            height: 40px;
+            margin-top: 15px;
+        }
+
+        .music-visualizer.show {
+            display: flex;
+        }
+
+        .bar {
+            width: 4px;
+            background: linear-gradient(to top, #ff69b4, #ffb6c1);
+            border-radius: 2px;
+            animation: musicBars 1s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
+        .bar:nth-child(3) { height: 25px; animation-delay: 0.2s; }
+        .bar:nth-child(4) { height: 35px; animation-delay: 0.3s; }
+        .bar:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+        .bar:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+        .bar:nth-child(7) { height: 25px; animation-delay: 0.6s; }
+
+        @keyframes musicBars {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.3); }
+        }
+
+        /* Hidden YouTube iframe */
+        .hidden-youtube {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .letter-section {
@@ -276,11 +397,6 @@
             font-style: italic;
         }
 
-        .audio-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -297,15 +413,40 @@
     </style>
 </head>
 <body>
+    <!-- Hidden YouTube iframe for background music -->
+    <iframe 
+        id="backgroundMusic"
+        class="hidden-youtube"
+        src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1&controls=0&showinfo=0&rel=0&autoplay=0&loop=1&playlist=jfKfPfyJRdk" 
+        frameborder="0" 
+        allow="autoplay; encrypted-media">
+    </iframe>
+
     <div class="container">
         <!-- Hero Section -->
         <div class="hero-section">
             <h1 class="hero-title">Happy Belated Birthday</h1>
             <h2 class="subtitle">Dear Jaya ✨</h2>
-            <div class="music-note">🎵 Playing something special for you 🎵</div>
-            <div class="audio-container">
-                <iframe width="0" height="0" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk" frameborder="0" allow="autoplay"></iframe>
-                <p style="color: #8b4b8c; font-size: 0.9rem; margin-top: 10px;">🎼 Soft romantic melody playing in the background</p>
+            
+            <div class="music-section">
+                <div class="music-note">🎵 A romantic melody crafted just for you 🎵</div>
+                <div class="music-controls">
+                    <button class="play-music-btn" onclick="toggleMusic()" id="musicBtn">
+                        🎼 Start the Magic 🎼
+                    </button>
+                    <div class="music-status" id="musicStatus">
+                        🎶 Beautiful music is now playing in the background 🎶
+                    </div>
+                    <div class="music-visualizer" id="visualizer">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -335,8 +476,8 @@
             <div class="question">
                 <h3>1. What's my favorite way to spend a weekend?</h3>
                 <div class="options">
-                    <div class="option" onclick="selectOption(this, true)">Playing video games all day</div>
-                    <div class="option" onclick="selectOption(this, false)">Reading a good book with some music</div>
+                    <div class="option" onclick="selectOption(this, false)">Playing video games all day</div>
+                    <div class="option" onclick="selectOption(this, true)">Reading a good book with some music</div>
                     <div class="option" onclick="selectOption(this, false)">Binge-watching Netflix series</div>
                     <div class="option" onclick="selectOption(this, false)">Going to crowded parties</div>
                 </div>
@@ -390,6 +531,62 @@
     </div>
 
     <script>
+        let isPlaying = false;
+
+        function toggleMusic() {
+            const musicBtn = document.getElementById('musicBtn');
+            const musicStatus = document.getElementById('musicStatus');
+            const visualizer = document.getElementById('visualizer');
+            const iframe = document.getElementById('backgroundMusic');
+            
+            if (!isPlaying) {
+                // Start music
+                iframe.src = iframe.src.replace('autoplay=0', 'autoplay=1');
+                isPlaying = true;
+                
+                musicBtn.textContent = '🎵 Music Playing... (Click to Stop) 🎵';
+                musicBtn.style.background = 'linear-gradient(45deg, #32cd32, #98fb98)';
+                musicStatus.classList.add('show');
+                visualizer.classList.add('show');
+                
+                // Create musical sparkles
+                createMusicSparkles();
+                
+            } else {
+                // Stop music
+                iframe.src = iframe.src.replace('autoplay=1', 'autoplay=0');
+                isPlaying = false;
+                
+                musicBtn.textContent = '🎼 Start the Magic 🎼';
+                musicBtn.style.background = 'linear-gradient(45deg, #ff69b4, #ffb6c1)';
+                musicStatus.classList.remove('show');
+                visualizer.classList.remove('show');
+            }
+        }
+
+        function createMusicSparkles() {
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    const notes = ['🎵', '🎶', '♪', '♫'];
+                    sparkle.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = Math.random() * 100 + 'vw';
+                    sparkle.style.top = Math.random() * 100 + 'vh';
+                    sparkle.style.fontSize = '25px';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '999';
+                    sparkle.style.color = '#ff69b4';
+                    sparkle.style.animation = 'float-up 4s ease-in-out forwards';
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 4000);
+                }, i * 150);
+            }
+        }
+
         // Create confetti animation
         function createConfetti() {
             for (let i = 0; i < 50; i++) {
