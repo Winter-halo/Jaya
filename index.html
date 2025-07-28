@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Belated Birthday, Jaya! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #f8e8ff 50%, #fff0f5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            animation: confetti-fall 3s linear infinite;
+            z-index: 1000;
+        }
+
+        .confetti:nth-child(odd) {
+            background: #ffb6c1;
+            width: 8px;
+            height: 8px;
+            animation-duration: 2.5s;
+        }
+
+        .confetti:nth-child(3n) {
+            background: #dda0dd;
+            width: 6px;
+            height: 6px;
+            animation-duration: 3.5s;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart {
+            position: fixed;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: float-up 4s ease-in-out infinite;
+            z-index: 999;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ff69b4, #dda0dd, #ffb6c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #8b4b8c;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .music-note {
+            font-size: 1.2rem;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        .letter-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.2);
+            border-left: 5px solid #ffb6c1;
+        }
+
+        .letter-title {
+            font-size: 2rem;
+            color: #8b4b8c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .poem {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5d4e5d;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .quiz-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.2);
+        }
+
+        .quiz-title {
+            font-size: 2rem;
+            color: #8b4b8c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 10px;
+        }
+
+        .question h3 {
+            color: #8b4b8c;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #ffb6c1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #5d4e5d;
+        }
+
+        .option:hover {
+            background: #ffb6c1;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .option.correct {
+            background: #98fb98;
+            border-color: #90ee90;
+        }
+
+        .option.wrong {
+            background: #ffcccb;
+            border-color: #ff6b6b;
+        }
+
+        .surprise-button {
+            display: block;
+            margin: 40px auto;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .surprise-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .surprise-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .virtual-gift {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+        }
+
+        .final-message {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.2);
+            font-size: 1.3rem;
+            color: #8b4b8c;
+            font-style: italic;
+        }
+
+        .audio-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .letter-section, .quiz-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Happy Belated Birthday</h1>
+            <h2 class="subtitle">Dear Jaya ✨</h2>
+            <div class="music-note">🎵 Playing something special for you 🎵</div>
+            <div class="audio-container">
+                <iframe width="0" height="0" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk" frameborder="0" allow="autoplay"></iframe>
+                <p style="color: #8b4b8c; font-size: 0.9rem; margin-top: 10px;">🎼 Soft romantic melody playing in the background</p>
+            </div>
+        </div>
+
+        <!-- Letter Section -->
+        <div class="letter-section">
+            <h2 class="letter-title">A Little Something From My Heart 💕</h2>
+            <div class="poem">
+                I know I'm a little late, but here's what I want to say,<br>
+                Your smile lights up every ordinary day.<br>
+                The way you laugh, the way you care,<br>
+                Makes everything feel lighter in the air.<br><br>
+                
+                You've brought colors I never knew existed,<br>
+                In moments when our eyes have briefly kissed.<br>
+                Though words sometimes get tangled in my mind,<br>
+                You're the most beautiful soul I've ever been lucky to find.<br><br>
+                
+                So here's to you, Jaya, on your special day,<br>
+                Even if it's fashionably late, in my own way. 🌸
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section">
+            <h2 class="quiz-title">How Well Do You Know Me? 🤔</h2>
+            
+            <div class="question">
+                <h3>1. What's my favorite way to spend a weekend?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, true)">Playing video games all day</div>
+                    <div class="option" onclick="selectOption(this, false)">Reading a good book with some music</div>
+                    <div class="option" onclick="selectOption(this, false)">Binge-watching Netflix series</div>
+                    <div class="option" onclick="selectOption(this, false)">Going to crowded parties</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. What makes me smile the most?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, false)">Funny memes on social media</div>
+                    <div class="option" onclick="selectOption(this, true)">Genuine conversations with people I care about</div>
+                    <div class="option" onclick="selectOption(this, false)">Winning at competitive games</div>
+                    <div class="option" onclick="selectOption(this, false)">Getting good grades</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. If I could give you anything right now, what would it be?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, false)">An expensive gift</div>
+                    <div class="option" onclick="selectOption(this, false)">A surprise party</div>
+                    <div class="option" onclick="selectOption(this, true)">A handwritten letter with all my thoughts</div>
+                    <div class="option" onclick="selectOption(this, false)">Concert tickets</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Surprise Button -->
+        <button class="surprise-button" onclick="showSurprise()">
+            ✨ Click Me for a Special Surprise! ✨
+        </button>
+
+        <!-- Surprise Message -->
+        <div class="surprise-message" id="surpriseMessage">
+            <div class="virtual-gift">🌹💖✨</div>
+            <h2 style="color: #8b4b8c; margin-bottom: 20px;">For You, Jaya</h2>
+            <p style="font-size: 1.2rem; color: #5d4e5d; line-height: 1.6;">
+                I may not have said it out loud yet, but you mean more to me than words can express. 
+                Your confession was the most beautiful thing I've ever heard, and I've been carrying 
+                it in my heart like a precious secret. You make ordinary moments feel magical, 
+                and I'm grateful for every smile, every laugh, every little moment we share. 
+                This belated birthday wish comes with all the feelings I'm still learning to put into words. 💕
+            </p>
+            <div class="virtual-gift">🎂🎈🌸</div>
+        </div>
+
+        <!-- Final Message -->
+        <div class="final-message">
+            Thanks for being amazing, Jaya. You make days better just by being you. 
+            Here's to more shared smiles, more conversations, and more beautiful moments ahead. 🌟💕
+        </div>
+    </div>
+
+    <script>
+        // Create confetti animation
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 100);
+            }
+        }
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💕';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 2000);
+        }
+
+        // Quiz functionality
+        function selectOption(element, isCorrect) {
+            const options = element.parentNode.querySelectorAll('.option');
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+                if (option === element) {
+                    option.classList.add(isCorrect ? 'correct' : 'wrong');
+                } else if (option.onclick.toString().includes('true')) {
+                    option.classList.add('correct');
+                }
+            });
+        }
+
+        // Show surprise message
+        function showSurprise() {
+            const surpriseMessage = document.getElementById('surpriseMessage');
+            surpriseMessage.style.display = 'block';
+            
+            // Create extra confetti for the surprise
+            createConfetti();
+            
+            // Scroll to surprise message
+            surpriseMessage.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            createConfetti();
+            createFloatingHearts();
+        });
+
+        // Add some sparkle effects periodically
+        setInterval(() => {
+            const sparkles = ['✨', '💫', '⭐', '🌟'];
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '999';
+            sparkle.style.animation = 'sparkle 2s ease-in-out forwards';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }, 3000);
+    </script>
+</body>
+</html>
